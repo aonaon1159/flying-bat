@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flying Bat Animation</title>
+    <style>
+      body {
+        background: #212121;
+      }
+      .overflow-hidden {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        min-height: 58rem;
+      }
+
+      /* Style for the bat */
+      .bat {
+        width: 100px;
+        height: 210px;
+        background-size: 1500px 200px;
+        transform: rotate3d(1, 0, 1, 314deg);
+        background-image: url("/bat.png");
+        position: absolute;
+        bottom: 0;
+        left: -200px;
+      }
+
+      /* Animation for bat flapping */
+      @keyframes fly {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: -800px 0;
+        }
+      }
+
+      /* Animation paths for bats */
+      @keyframes moveAcross {
+        0% {
+          bottom: -100px;
+        }
+        100% {
+          bottom: 100%;
+          left: 80%;
+        }
+      }
+
+      @keyframes moveAcross2 {
+        0% {
+          bottom: -100px;
+        }
+        100% {
+          bottom: 100%;
+          left: 100%;
+        }
+      }
+
+      @keyframes moveAcross3 {
+        0% {
+          bottom: -100px;
+        }
+        100% {
+          bottom: 100%;
+          left: 120%;
+        }
+      }
+
+      @keyframes moveAcross4 {
+        0% {
+          bottom: -100px;
+        }
+        100% {
+          bottom: 100%;
+          left: 140%;
+        }
+      }
+      @keyframes moveAcross5 {
+        0% {
+          bottom: -100px;
+        }
+        100% {
+          bottom: 100%;
+          left: 160%;
+        }
+      }
+      @keyframes moveAcross6 {
+        0% {
+          bottom: -100px;
+        }
+        100% {
+          bottom: 100%;
+          left: 180%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="overflow-hidden" id="bat-container"></div>
+
+    <script>
+      // Configuration
+      const batContainer = document.getElementById("bat-container");
+      const numberOfBats = 16;
+      const animations = [
+        "moveAcross",
+        "moveAcross2",
+        "moveAcross3",
+        "moveAcross4",
+        "moveAcross5",
+        "moveAcross6",
+      ];
+      const delayBetweenBats = 200; // Delay of 0.2s between each bat creation
+
+      function createBat(index) {
+        const bat = document.createElement("div");
+        bat.classList.add("bat");
+
+        // Assign random animation and speed
+        const animation =
+          animations[Math.floor(Math.random() * animations.length)];
+        const speed = (Math.random() * 2 + 1.5).toFixed(2); // Speed between 1.5s to 3.5s
+        const fly = (Math.random() * 0.3 + 0.3).toFixed(2);
+
+        // Apply flapping and movement animations
+        bat.style.animation = `fly ${fly}s steps(8) infinite, ${animation} ${speed}s linear`;
+
+        // Remove bat when the moveAcross animation ends
+        bat.addEventListener("animationend", (event) => {
+          if (event.animationName.startsWith("moveAcross")) {
+            bat.remove();
+          }
+        });
+
+        // Add bat to container
+        batContainer.appendChild(bat);
+      }
+
+      // Create each bat with a cumulative delay
+      for (let i = 0; i < numberOfBats; i++) {
+        setTimeout(() => createBat(i), i * delayBetweenBats);
+      }
+    </script>
+  </body>
+</html>
